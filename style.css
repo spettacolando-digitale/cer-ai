@@ -119,8 +119,8 @@ footer nav{display:flex;gap:16px;flex-wrap:wrap}
 .tappe button span{display:block;font-weight:400;font-size:14px;color:var(--grigio)}
 .tappe button.on{background:var(--verde);color:var(--giallo)}
 .tappe button.on span{color:var(--chiaro)}
-.counters{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:14px}
+.counters{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:14px}
 .ctr{background:var(--verde);color:var(--chiaro);border-radius:16px;padding:22px 18px}
 .ctr b{display:block;font-family:Caladea,Georgia,serif;font-size:clamp(30px,3.4vw,44px);color:var(--giallo);line-height:1.05;font-variant-numeric:tabular-nums}
 .ctr span{display:block;margin-top:8px;font-size:15px;line-height:1.35}
-@media (max-width:860px){.counters{grid-template-columns:repeat(2,1fr)}.counters .ctr:last-child{grid-column:1/-1}}
+@media (max-width:860px){.counters{grid-template-columns:repeat(2,1fr)}}
