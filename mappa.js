@@ -66,3 +66,30 @@
     if (es) es.textContent = 'Si è aperto il tuo programma di posta con il messaggio già pronto: premi Invia per completare. Se non si apre, scrivi ad amministrazione@cer-ai.it indicando Comune e recapito.';
   });
 })();
+
+// Contatori degli obiettivi per tappa
+(function () {
+  var box = document.getElementById('obiettivi');
+  if (!box) return;
+  var btns = box.querySelectorAll('.tappe button'), nums = box.querySelectorAll('.ctr b');
+  var fmt = function (n) { return Math.round(n).toLocaleString('it-IT'); };
+  var calma = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var cur = [].map.call(nums, function () { return 0; });
+  function vai(t) {
+    [].forEach.call(btns, function (b, i) { b.classList.toggle('on', i === t); b.setAttribute('aria-selected', i === t); });
+    [].forEach.call(nums, function (el, k) {
+      var da = cur[k], a = +el.dataset.v.split(',')[t]; cur[k] = a;
+      if (calma) { el.textContent = fmt(a); return; }
+      var t0 = null;
+      function passo(ts) { if (!t0) t0 = ts; var p = Math.min(1, (ts - t0) / 1200); p = 1 - Math.pow(1 - p, 3);
+        el.textContent = fmt(da + (a - da) * p); if (p < 1) requestAnimationFrame(passo); }
+      requestAnimationFrame(passo);
+    });
+  }
+  [].forEach.call(btns, function (b, i) { b.addEventListener('click', function () { vai(i); }); });
+  var avviato = false;
+  function avvia() { if (!avviato) { avviato = true; vai(0); } }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (e, o) { if (e[0].isIntersecting) { avvia(); o.disconnect(); } }, { threshold: 0.3 }).observe(box);
+  } else avvia();
+})();

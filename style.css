@@ -112,3 +112,15 @@ footer nav{display:flex;gap:16px;flex-wrap:wrap}
 #italia .pt.on{fill:var(--giallo);stroke:var(--verde);stroke-width:2.5;opacity:1;r:9}
 .dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--verde-medio);margin-right:4px}
 @media (max-width:860px){.mapbox{grid-template-columns:1fr}#italia{max-height:520px}}
+
+/* obiettivi */
+.tappe{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 26px}
+.tappe button{font:inherit;font-weight:700;font-size:20px;color:var(--verde);background:var(--crema);border:2px solid transparent;border-radius:14px;padding:10px 20px;cursor:pointer;text-align:left;line-height:1.1}
+.tappe button span{display:block;font-weight:400;font-size:14px;color:var(--grigio)}
+.tappe button.on{background:var(--verde);color:var(--giallo)}
+.tappe button.on span{color:var(--chiaro)}
+.counters{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:14px}
+.ctr{background:var(--verde);color:var(--chiaro);border-radius:16px;padding:22px 18px}
+.ctr b{display:block;font-family:Caladea,Georgia,serif;font-size:clamp(30px,3.4vw,44px);color:var(--giallo);line-height:1.05;font-variant-numeric:tabular-nums}
+.ctr span{display:block;margin-top:8px;font-size:15px;line-height:1.35}
+@media (max-width:860px){.counters{grid-template-columns:repeat(2,1fr)}.counters .ctr:last-child{grid-column:1/-1}}
