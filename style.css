@@ -1,7 +1,7 @@
 @font-face{font-family:Caladea;src:url(fonts/Caladea-Bold.ttf) format("truetype");font-weight:700;font-display:swap}
 @font-face{font-family:Carlito;src:url(fonts/Carlito-Regular.ttf) format("truetype");font-weight:400;font-display:swap}
 @font-face{font-family:Carlito;src:url(fonts/Carlito-Bold.ttf) format("truetype");font-weight:700;font-display:swap}
-:root{--verde:#1B4433;--verde-medio:#52796E;--giallo:#EDC84A;--crema:#F3F0EA;--chiaro:#C9DED3;--ink:#222;--grigio:#5f6b66}
+:root{--verde:#2DA22D;--verde-scuro:#1C6E1F;--verde-chiaro:#6BC25A;--verde-medio:#2DA22D;--giallo:#2DA22D;--crema:#F1F7EE;--chiaro:#E3F2DC;--ink:#222;--grigio:#56635a}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:#fff;color:var(--ink);font-family:Carlito,"Segoe UI",Arial,sans-serif;font-size:18px;line-height:1.55;min-height:100vh;display:flex;flex-direction:column}
@@ -124,3 +124,46 @@ footer nav{display:flex;gap:16px;flex-wrap:wrap}
 .ctr b{display:block;font-family:Caladea,Georgia,serif;font-size:clamp(30px,3.4vw,44px);color:var(--giallo);line-height:1.05;font-variant-numeric:tabular-nums}
 .ctr span{display:block;margin-top:8px;font-size:15px;line-height:1.35}
 @media (max-width:860px){.counters{grid-template-columns:repeat(2,1fr)}}
+
+/* palette GSE: nome in due verdi */
+.brand em,.fname em{font-style:normal}
+.c1{color:var(--verde-chiaro)}
+.c2{color:var(--verde-scuro)}
+.brand b{color:var(--verde-scuro)}
+.brand span{color:var(--verde)}
+h1,h2,h3{color:var(--verde-scuro)}
+a{color:var(--verde-scuro)}
+.home main{background:#fff;color:var(--ink)}
+.home .teaser{color:var(--grigio)}
+.home .pillars div{border:1.5px solid var(--chiaro);background:var(--crema)}
+.home .pillars b{color:var(--verde-scuro)}
+.home .pillars span{color:var(--grigio)}
+.pill{border-color:var(--verde);color:var(--verde-scuro)}
+.pill:hover,.pill.on{background:var(--verde);border-color:var(--verde);color:#fff}
+.btn{background:var(--verde);color:#fff}
+.btn:hover{background:var(--verde-scuro)}
+header.top{background:#fff;border-bottom:3px solid var(--verde)}
+header.top nav a{color:var(--verde-scuro)}
+.hero{background:var(--verde);color:#fff}
+.hero h1{color:#fff}
+.hero .tag{color:#E3F2DC}
+.band{background:var(--verde-scuro)}
+footer{background:var(--verde-scuro);color:#E3F2DC}
+footer a{color:#E3F2DC}
+footer a:hover{color:#fff}
+.fname{font-family:Caladea,Georgia,serif}
+.fname .c1{color:#9BDB86}.fname .c2{color:#fff}
+.tappe button{color:var(--verde-scuro)}
+.tappe button.on{background:var(--verde);color:#fff}
+.tappe button.on span{color:#E3F2DC}
+.ctr{background:var(--verde-scuro);color:#E3F2DC}
+.ctr b{color:#9BDB86}
+.esito b{color:var(--verde-scuro)}
+#italia .reg{fill:#E3F2DC}
+#italia .pt{fill:var(--verde)}
+#italia .pt:hover{fill:var(--verde-scuro)}
+#italia .pt.on{fill:#FFD54A;stroke:var(--verde-scuro)}
+label{color:var(--verde-scuro)}
+.gse{display:flex;gap:20px;align-items:center;justify-content:space-between;background:#fff;border:2px solid var(--verde);border-radius:16px;padding:18px 22px;margin-top:18px}
+@media (max-width:860px){.gse{flex-direction:column;align-items:flex-start}}
+.gse .btn{white-space:nowrap;flex:none}
