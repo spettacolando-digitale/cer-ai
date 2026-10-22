@@ -139,7 +139,7 @@ footer{text-align:center;color:var(--gr);font-size:13px;padding:10px 16px 30px}
 (function(){
  var WA='393339380735', MAIL='amministrazione@cer-ai.it';
  // Indirizzo della regia (app web Google). Finché è vuoto, il questionario si invia con WhatsApp o email.
- var REGIA='';
+ var REGIA='https://script.google.com/macros/s/AKfycbzbOt1ytmyWERRTv7uQEvsXs5ZE2b6S3CgSvVdP8qISTrgoWV1zw9P7aZuz-41z7upSCw/exec';
  var qs=[].slice.call(document.querySelectorAll('.q')), ans={};
  qs.forEach(function(q){
   var bs=[].slice.call(q.querySelectorAll('button'));
@@ -193,7 +193,7 @@ footer{text-align:center;color:var(--gr);font-size:13px;padding:10px 16px 30px}
     accordo:false, privacy:priv.checked, sito:document.getElementById('sito').value, quandoClient:new Date().toISOString(),
     risposte:qs.map(function(q){return {d:q.dataset.q, r:ans[q.dataset.q]||'—'}})};
    fetch(REGIA,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(dati)})
-    .then(function(){ binvia.textContent='Inviato ✓'; msg.textContent='Grazie! Tra pochi minuti riceverete per email l\'anteprima del progetto.'; })
+    .then(function(){ binvia.textContent='Inviato ✓'; bwa.hidden=false; bwa.textContent='Avvisaci anche su WhatsApp (facoltativo)'; msg.textContent='Grazie! Tra pochi minuti riceverete per email l\'anteprima del progetto.'; })
     .catch(function(){ binvia.textContent='Invia il questionario'; binvia.setAttribute('aria-disabled','false'); bwa.hidden=false; msg.textContent='Invio non riuscito: riprovate o usate WhatsApp.'; });
   });
  }
