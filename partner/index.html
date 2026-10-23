@@ -68,7 +68,7 @@ footer{text-align:center;color:var(--gr);font-size:13px;padding:10px 16px 30px}
 </header>
 <main>
  <h1>Due minuti per conoscerci</h1>
- <p class="lead">Prima di presentarvi il progetto vorremmo conoscere la vostra società: ci interessano soprattutto certificazioni ed esperienza. Toccate la risposta più vicina: non serve essere precisi. Le risposte restano riservate.</p>
+ <p class="lead">Prima di presentarvi il progetto vorremmo conoscervi. Dopo l’invio potrete leggere e accettare l’accordo di riservatezza, ricevere la presentazione del progetto e rispondere a poche domande sul vostro ruolo.</p>
  <div class="bar" aria-hidden="true"><i id="prog"></i></div>
 
  <form id="f" onsubmit="return false">
@@ -89,29 +89,8 @@ footer{text-align:center;color:var(--gr);font-size:13px;padding:10px 16px 30px}
  </section>
 
  <section>
-  <h2>2. Certificazioni e solidità</h2>
-  <div class="q multi" data-q="Certificazioni"><p>Quali certificazioni avete? <small>(anche più di una)</small></p><div class="opts"><button type="button">ISO 9001 qualità</button><button type="button">ISO 14001 ambiente</button><button type="button">ISO 45001 sicurezza</button><button type="button">UNI CEI 11352 servizi energetici</button><button type="button">SOA lavori pubblici</button><button type="button">Rating di legalità</button><button type="button" data-none="1">Nessuna</button></div></div>
-  <div class="q" data-q="Anni di attività"><p>Da quanti anni siete attivi?</p><div class="opts"><button type="button">Meno di 5</button><button type="button">5 – 15</button><button type="button">Oltre 15</button></div></div>
-  <div class="q" data-q="Fatturato medio ultimo triennio"><p>Fatturato medio dell'ultimo triennio</p><div class="opts"><button type="button">Meno di 500.000 €</button><button type="button">500.000 € – 2 M€</button><button type="button">2 – 10 M€</button><button type="button">Oltre 10 M€</button></div></div>
- </section>
-
- <section>
-  <h2>3. Impianti per il risparmio energetico</h2>
-  <div class="q" data-q="Impianti di risparmio energetico per aziende"><p>Realizzate impianti per il risparmio energetico per le aziende?</p><div class="opts"><button type="button">Sì, spesso</button><button type="button">Qualche volta</button><button type="button">No</button></div></div>
-  <div class="q multi" data-q="Formula usata"><p>Con quale formula? <small>(anche più di una)</small></p><div class="opts"><button type="button">Vendita e installazione chiavi in mano</button><button type="button">Contratto a prestazione garantita (EPC)</button><button type="button">Servizio energia</button><button type="button">Noleggio o leasing operativo</button><button type="button">Vendita dell'energia prodotta</button></div></div>
-  <div class="q" data-q="Interventi negli ultimi 3 anni"><p>Quanti interventi avete realizzato negli ultimi 3 anni?</p><div class="opts"><button type="button">Meno di 10</button><button type="button">10 – 50</button><button type="button">Oltre 50</button></div></div>
- </section>
-
- <section>
-  <h2>4. Comunità energetiche ed enti pubblici</h2>
-  <div class="q" data-q="Esperienza CER"><p>Avete costituito o gestite una comunità energetica?</p><div class="opts"><button type="button">Sì</button><button type="button">In corso</button><button type="button">No</button></div></div>
-  <div class="q" data-q="Lavori con i Comuni"><p>Avete lavorato con Comuni in partenariato pubblico-privato o finanza di progetto?</p><div class="opts"><button type="button">Sì</button><button type="button">Solo appalti</button><button type="button">No</button></div></div>
- </section>
-
- <section>
-  <h2>5. Collaborazione</h2>
-  <div class="q" data-q="Società di progetto con altri soci"><p>Entrereste in una società di progetto con altri soci?</p><div class="opts"><button type="button">Sì</button><button type="button">Dipende</button><button type="button">No</button></div></div>
-  <div class="q" data-q="Collaborazioni esclusive con grandi gruppi"><p>Avete esclusive o accordi stabili con grandi gruppi energetici?</p><div class="opts"><button type="button">No</button><button type="button">Sì</button></div></div>
+  <h2>2. Il vostro ruolo</h2>
+  <div class="q" data-q="Ruolo"><p>Come pensate di partecipare al progetto?</p><div class="opts"><button type="button">Investitore o capofila (ESCO, PMI)</button><button type="button">Professionista tecnico</button><button type="button">Impresa che realizza impianti o opere</button><button type="button">Altro (finanza, servizi, operatore)</button></div></div>
  </section>
 
  <section>
@@ -132,11 +111,11 @@ footer{text-align:center;color:var(--gr);font-size:13px;padding:10px 16px 30px}
   </div>
   <input type="text" id="sito" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
   <div class="send">
-   <button type="button" class="btn invia" id="binvia" aria-disabled="true" hidden>Invia il questionario</button>
+   <button type="button" class="btn invia" id="binvia" aria-disabled="true" hidden>Invia e scopri il progetto</button>
    <a class="btn wa" id="bwa" href="#" aria-disabled="true">Invia su WhatsApp</a>
    <a class="btn mail" id="bmail" href="#" aria-disabled="true">Invia per email</a>
   </div>
-  <div id="msg" aria-live="polite">Per inviare servono i campi con * e il consenso privacy.</div>
+  <div id="msg" aria-live="polite">Per inviare servono i campi con *, il ruolo e il consenso privacy.</div>
  </section>
  </form>
 </main>
@@ -145,6 +124,7 @@ footer{text-align:center;color:var(--gr);font-size:13px;padding:10px 16px 30px}
 (function(){
  var WA='393339380735', MAIL='amministrazione@cer-ai.it';
  // Indirizzo della regia (app web Google). Finché è vuoto, il questionario si invia con WhatsApp o email.
+ var CODICE=(function(){var a=new Uint8Array(20);(window.crypto||window.msCrypto).getRandomValues(a);return [].map.call(a,function(x){return ('0'+x.toString(16)).slice(-2)}).join('')})();
  var REGIA='https://script.google.com/macros/s/AKfycbzbOt1ytmyWERRTv7uQEvsXs5ZE2b6S3CgSvVdP8qISTrgoWV1zw9P7aZuz-41z7upSCw/exec';
  var qs=[].slice.call(document.querySelectorAll('.q')), ans={};
  qs.forEach(function(q){
@@ -173,20 +153,20 @@ footer{text-align:center;color:var(--gr);font-size:13px;padding:10px 16px 30px}
   qs.forEach(function(q,i){ r.push((i+1)+'. '+q.dataset.q+': '+(ans[q.dataset.q]||'—')); });
   r.push('');
   r.push('Consenso privacy (GDPR, informativa art. 13): ACCETTATO il '+t+'.');
-  r.push('Chiedo di ricevere l\'anteprima del progetto.');
+  r.push('Chiedo di conoscere il progetto.');
   return r.join('\n');
  }
  function upd(){
   var mailok=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim());
   var n=Object.keys(ans).length; prog.style.width=Math.round((n+(rs.value.trim()?1:0)+(nome.value.trim()?1:0)+(mailok?1:0)+(priv.checked?1:0))/(qs.length+4)*100)+'%';
-  var pronto=rs.value.trim().length>1 && nome.value.trim().length>3 && mailok && priv.checked;
+  var pronto=rs.value.trim().length>1 && nome.value.trim().length>3 && mailok && priv.checked && !!ans['Ruolo'];
   [bwa,bm,binvia].forEach(function(b){ b.setAttribute('aria-disabled', pronto?'false':'true'); });
   if(pronto){
    var t=testo();
    bwa.href='https://wa.me/'+WA+'?text='+encodeURIComponent(t);
    bm.href='mailto:'+MAIL+'?subject='+encodeURIComponent('Questionario CER-AI - '+rs.value.trim())+'&body='+encodeURIComponent(t);
-   msg.textContent=(n<qs.length?'Hai risposto a '+n+(n===1?' domanda':' domande')+' su '+qs.length+'. ':'')+'Tocca un pulsante: si apre il messaggio già pronto, poi premi Invia.';
-  } else { bwa.href='#'; bm.href='#'; var manca=[]; if(rs.value.trim().length<2)manca.push('ragione sociale'); if(nome.value.trim().length<4)manca.push('nome e cognome'); if(!mailok)manca.push('email valida'); if(!priv.checked)manca.push('consenso privacy');
+   msg.textContent=(REGIA?'Tutto pronto: tocca «Invia e scopri il progetto».':'Tocca un pulsante: si apre il messaggio già pronto, poi premi Invia.');
+  } else { bwa.href='#'; bm.href='#'; var manca=[]; if(rs.value.trim().length<2)manca.push('ragione sociale'); if(nome.value.trim().length<4)manca.push('nome e cognome'); if(!mailok)manca.push('email valida'); if(!ans['Ruolo'])manca.push('ruolo'); if(!priv.checked)manca.push('consenso privacy');
    msg.textContent='Per inviare mancano: '+manca.join(', ')+'.'; }
  }
  [rs,ditta,nome,ruolo,email].forEach(function(x){x.addEventListener('input',upd)}); titolo.addEventListener('change',upd); priv.addEventListener('change',upd);
@@ -197,10 +177,10 @@ footer{text-align:center;color:var(--gr);font-size:13px;padding:10px 16px 30px}
    if(binvia.getAttribute('aria-disabled')==='true') return;
    binvia.setAttribute('aria-disabled','true'); binvia.textContent='Invio in corso…';
    var dati={ragioneSociale:rs.value.trim(), ditta:ditta.value.trim(), nome:chiCompila(), titolo:titolo.value, ruolo:ruolo.value.trim(), email:email.value.trim(),
-    accordo:false, privacy:priv.checked, sito:document.getElementById('sito').value, quandoClient:new Date().toISOString(),
+    accordo:false, tipo:ans['Ruolo'], codice:CODICE, privacy:priv.checked, sito:document.getElementById('sito').value, quandoClient:new Date().toISOString(),
     risposte:qs.map(function(q){return {d:q.dataset.q, r:ans[q.dataset.q]||'—'}})};
    fetch(REGIA,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(dati)})
-    .then(function(){ binvia.textContent='Inviato ✓'; bwa.hidden=false; bwa.textContent='Avvisaci anche su WhatsApp (facoltativo)'; msg.textContent='Grazie! Tra pochi minuti riceverete per email l\'anteprima del progetto.'; })
+    .then(function(){ binvia.textContent='Inviato ✓'; msg.textContent='Grazie! Ora si apre la pagina dell\'accordo di riservatezza…'; setTimeout(function(){ location.href=REGIA+'?p='+CODICE+'&a=si'; },900); })
     .catch(function(){ binvia.textContent='Invia il questionario'; binvia.setAttribute('aria-disabled','false'); bwa.hidden=false; msg.textContent='Invio non riuscito: riprovate o usate WhatsApp.'; });
   });
  }
