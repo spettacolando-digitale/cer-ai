@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#1C6E1F">
+<meta property="og:title" content="Questionario">
+<meta property="og:image" content="https://www.cer-ai.it/partner/qr-questionario.png">
+<meta property="og:image:secure_url" content="https://www.cer-ai.it/partner/qr-questionario.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1080">
+<meta property="og:image:height" content="1080">
+<meta property="og:url" content="https://www.cer-ai.it/partner/prova/">
+<meta property="og:type" content="website">
+<title>Questionario</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%232DA22D'/%3E%3Ctext x='32' y='42' font-family='Georgia' font-weight='700' font-size='26' fill='%23fff' text-anchor='middle'%3ECA%3C/text%3E%3C/svg%3E">
+<style>
+@font-face{font-family:Caladea;src:url(../../fonts/Caladea-Bold.ttf) format("truetype");font-weight:700;font-display:swap}
+@font-face{font-family:Carlito;src:url(../../fonts/Carlito-Regular.ttf) format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:Carlito;src:url(../../fonts/Carlito-Bold.ttf) format("truetype");font-weight:700;font-display:swap}
+:root{--v:#2DA22D;--vs:#1C6E1F;--vd:#123F15;--vc:#6BC25A;--bg:#F4F7F2;--ch:#E6F2E0;--line:#DCE5D8;--ink:#1B261D;--gr:#5B6A5E;--err:#B3261E}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Carlito,"Segoe UI",Arial,sans-serif;font-size:17px;line-height:1.5}
+[hidden]{display:none!important}
+a{color:var(--vs)}
+/* testata */
+.top{background:linear-gradient(135deg,var(--vd),var(--vs) 60%,var(--v));color:#fff;padding:22px 16px 74px}
+.top .in{max-width:680px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-family:Caladea,Georgia,serif;font-weight:700;font-size:30px;line-height:1;letter-spacing:.5px}
+.brand span{color:#A9E29B}
+.brand small{display:block;font-family:Carlito,Arial,sans-serif;font-weight:400;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#CDEBC4;margin-top:4px}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:13px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:99px;padding:6px 12px;white-space:nowrap}
+main{max-width:680px;margin:-56px auto 0;padding:0 16px 40px}
+/* indicatore passi */
+.steps{display:flex;list-style:none;margin:0 0 14px;padding:14px 16px;background:#fff;border-radius:16px;box-shadow:0 6px 24px rgba(18,63,21,.10);gap:4px}
+.steps li{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:13px;color:var(--gr);text-align:center;position:relative}
+.steps li:not(:last-child)::after{content:"";position:absolute;top:15px;left:calc(50% + 20px);right:calc(-50% + 20px);height:2px;background:var(--line)}
+.steps li.done:not(:last-child)::after{background:var(--v)}
+.steps b{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--line);background:#fff;font-size:15px;color:var(--gr);transition:.2s}
+.steps li.on b{border-color:var(--v);background:var(--v);color:#fff;box-shadow:0 0 0 4px var(--ch)}
+.steps li.on{color:var(--vd);font-weight:700}
+.steps li.done b{border-color:var(--v);background:#fff;color:var(--v)}
+/* schede */
+.card{background:#fff;border-radius:18px;padding:24px 22px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 28px rgba(18,63,21,.06);animation:in .25s ease}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.kick{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--v);font-weight:700;margin:0 0 4px}
+h1,h2{font-family:Caladea,Georgia,serif;color:var(--vd);margin:0 0 6px;line-height:1.2}
+h1{font-size:27px}h2{font-size:24px}
+.lead{color:var(--gr);margin:0 0 18px}
+/* campi */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.full{grid-column:1/-1}
+.fld{margin-bottom:14px}
+.fld label{display:block;font-weight:700;font-size:15px;margin-bottom:5px}
+.fld label small{font-weight:400;color:var(--gr)}
+.fld input,.fld select,textarea{width:100%;font:inherit;font-size:16.5px;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);transition:border-color .15s,box-shadow .15s}
+.fld input:focus,.fld select:focus,textarea:focus{outline:0;border-color:var(--v);box-shadow:0 0 0 4px var(--ch)}
+.fld.bad input{border-color:var(--err)}
+.fld .e{display:none;color:var(--err);font-size:14px;margin-top:4px}
+.fld.bad .e{display:block}
+.rq{color:var(--v)}
+/* scelte: schede ruolo */
+.roles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px}
+.role{font:inherit;text-align:left;display:flex;gap:12px;align-items:flex-start;padding:14px;border:1.5px solid var(--line);border-radius:14px;background:#fff;cursor:pointer;color:var(--ink);transition:.15s;min-height:44px}
+.role:hover{border-color:var(--vc)}
+.role svg{flex:none;width:34px;height:34px;padding:7px;border-radius:10px;background:var(--ch);color:var(--vs)}
+.role strong{display:block;font-size:16.5px;line-height:1.25}
+.role span{display:block;font-size:14px;color:var(--gr);margin-top:2px}
+.role[aria-pressed="true"]{border-color:var(--v);background:#F6FBF3;box-shadow:0 0 0 3px var(--ch)}
+.role[aria-pressed="true"] svg{background:var(--v);color:#fff}
+.sub{font-weight:700;margin:20px 0 4px}
+.sub small{font-weight:400;color:var(--gr)}
+/* chip */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:15.5px;padding:9px 14px 9px 12px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:7px;min-height:42px;transition:.12s}
+.chip::before{content:"";width:16px;height:16px;border-radius:50%;border:1.5px solid #B8C6B4;flex:none;transition:.12s}
+.chip[data-m]::before{border-radius:4px}
+.chip:hover{border-color:var(--vc)}
+.chip[aria-pressed="true"]{border-color:var(--v);background:#F6FBF3;color:var(--vd);font-weight:700}
+.chip[aria-pressed="true"]::before{background:var(--v) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.3l2.6 2.5L12 5.5' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat;border-color:var(--v)}
+/* domande del ruolo */
+.qc{border-top:1px solid var(--line);padding:16px 0 4px}
+.qc:first-child{border-top:0;padding-top:4px}
+.qc p{margin:0 0 9px;font-weight:700;display:flex;gap:10px}
+.qc p i{font-style:normal;flex:none;width:24px;height:24px;border-radius:50%;background:var(--ch);color:var(--vs);font-size:13px;display:grid;place-items:center;margin-top:1px}
+.qc.ok p i{background:var(--v);color:#fff}
+.qc p small{font-weight:400;color:var(--gr)}
+.count{font-size:14px;color:var(--gr);background:var(--bg);border-radius:99px;padding:4px 12px;display:inline-block;margin-bottom:10px}
+/* consenso */
+.chk{display:flex;gap:12px;align-items:flex-start;padding:14px;border:1.5px solid var(--line);border-radius:14px;margin-top:18px;font-size:15.5px;cursor:pointer}
+.chk input{width:22px;height:22px;margin:1px 0 0;accent-color:var(--v);flex:none}
+.chk.bad{border-color:var(--err)}
+.lnk{background:none;border:0;padding:0;font:inherit;color:var(--vs);text-decoration:underline;cursor:pointer}
+.pbox{background:var(--bg);border-radius:12px;padding:12px 14px;margin-top:10px;font-size:14.5px}
+.pbox ul{padding-left:18px;margin:6px 0 0}
+.pbox li{margin:3px 0}
+/* accordo */
+.nda{list-style:none;padding:0;margin:0 0 12px;display:grid;gap:8px}
+.nda li{display:flex;gap:12px;align-items:flex-start;background:var(--bg);border-radius:12px;padding:12px 14px;font-size:15.5px}
+.nda li svg{flex:none;width:22px;height:22px;color:var(--v);margin-top:1px}
+/* cv */
+.bv{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:14px;background:linear-gradient(135deg,#F2F9EE,#E6F2E0);border:1.5px solid #CFE6C6;cursor:pointer;margin-bottom:6px;transition:.15s}
+.bv:hover{border-color:var(--v)}
+.bv input{position:absolute;width:1px;height:1px;opacity:0}
+.bv svg{flex:none;width:44px;height:44px;padding:10px;border-radius:12px;background:var(--v);color:#fff}
+.bv strong{display:block;color:var(--vd)}
+.bv span{font-size:14px;color:var(--gr)}
+.bvst{font-size:14.5px;min-height:1.2em;margin:6px 2px 0;color:var(--vs)}
+.bvst.err{color:var(--err)}
+.bvbar{height:6px;border-radius:9px;background:var(--ch);overflow:hidden;margin-top:6px}
+.bvbar i{display:block;height:100%;width:0;background:var(--v);transition:width .2s}
+.or{display:flex;align-items:center;gap:10px;color:var(--gr);font-size:13px;margin:14px 0 12px;text-transform:uppercase;letter-spacing:1px}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
+.fld.auto input,.fld.auto select{background:#F3FAEF;border-color:#9FD18F}
+.drop{display:flex;align-items:center;gap:14px;border:1.5px dashed #B8C6B4;border-radius:14px;padding:16px;cursor:pointer;background:#FBFDFA;transition:.15s}
+.drop:hover,.drop.ov{border-color:var(--v);background:#F6FBF3}
+.drop svg{flex:none;width:40px;height:40px;padding:9px;border-radius:12px;background:var(--ch);color:var(--vs)}
+.drop strong{display:block}
+.drop span{font-size:14px;color:var(--gr)}
+.drop.has{border-style:solid;border-color:var(--v)}
+.drop input{position:absolute;width:1px;height:1px;opacity:0}
+.x{margin-left:auto;background:none;border:0;font:inherit;font-size:14px;color:var(--gr);text-decoration:underline;cursor:pointer}
+/* pulsanti */
+.nav{display:flex;gap:10px;margin-top:22px;align-items:center}
+.btn{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:10px;font:inherit;font-weight:700;font-size:18px;border:0;border-radius:14px;padding:15px 18px;cursor:pointer;background:var(--v);color:#fff;box-shadow:0 4px 14px rgba(45,162,45,.28);transition:.15s;min-height:52px}
+.btn:hover{background:var(--vs)}
+.btn:disabled{opacity:.5;cursor:default;box-shadow:none}
+.btn.back{flex:none;background:#fff;color:var(--vs);border:1.5px solid var(--line);box-shadow:none;padding:15px 18px}
+.btn .sp{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:r .8s linear infinite}
+@keyframes r{to{transform:rotate(360deg)}}
+.msg{font-size:15px;color:var(--err);min-height:1.2em;margin-top:10px}
+.secure{display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px;color:var(--gr);margin-top:14px}
+/* grazie */
+.grazie{text-align:center;padding:36px 22px}
+.tick{width:88px;height:88px;border-radius:50%;background:var(--v);margin:0 auto 16px;display:grid;place-items:center;box-shadow:0 0 0 10px var(--ch)}
+.tick svg{width:46px;height:46px;color:#fff}
+.grazie h2{font-size:30px}
+.grazie .big{font-size:20px;line-height:1.5;margin:8px 0 22px}
+.next{text-align:left;display:grid;gap:10px;margin:0 0 18px}
+.next div{display:flex;gap:12px;align-items:flex-start;background:var(--bg);border-radius:12px;padding:12px 14px;font-size:15.5px}
+.next b.n{flex:none;width:26px;height:26px;border-radius:50%;background:var(--v);color:#fff;display:grid;place-items:center;font-size:14px}
+.grazie .s{font-size:14px;color:var(--gr)}
+footer{text-align:center;color:var(--gr);font-size:13px;padding:6px 16px 30px}
+@media (max-width:560px){
+ .grid,.roles{grid-template-columns:1fr}
+ .card{padding:20px 16px}
+ .steps li span{font-size:11.5px}
+ .steps li:not(:last-child)::after{left:calc(50% + 18px);right:calc(-50% + 18px)}
+ .badge{display:none}
+ h1{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="top"><div class="in">
+ <div class="brand">CER<span>-AI</span><small>Intelligenza green</small></div>
+ <div class="badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Percorso riservato</div>
+</div></div>
+
+<main>
+ <div style="background:#FFF4CC;border:1.5px solid #E8C860;color:#5a4a00;border-radius:12px;padding:10px 14px;margin:0 0 12px;font-size:14.5px;position:relative;z-index:1"><b>Versione di prova</b> · nulla viene inviato, nessuna email parte.</div>
+ <ol class="steps" id="steps" aria-label="Avanzamento">
+  <li class="on"><b>1</b><span>Chi siete</span></li>
+  <li><b>2</b><span>Ruolo</span></li>
+  <li><b>3</b><span>Riservatezza</span></li>
+  <li><b>4</b><span>Profilo</span></li>
+ </ol>
+
+ <!-- PASSO 1 -->
+ <section class="card" id="p1">
+  <p class="kick">Passo 1 di 4</p>
+  <h1>Conosciamoci</h1>
+  <p class="lead">Pochi dati per presentarvi il progetto. Servono circa tre minuti in tutto.</p>
+  <label class="bv" id="bv">
+   <input type="file" id="bvf" accept="image/*">
+   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></svg>
+   <div><strong>Compila dal biglietto da visita</strong><span>Fotografatelo o caricate un’immagine: i campi si riempiono da soli</span></div>
+  </label>
+  <div id="bvbox" hidden><div class="bvbar"><i id="bvp"></i></div></div>
+  <div class="bvst" id="bvst" aria-live="polite"></div>
+  <div class="or">oppure compilate a mano</div>
+  <div class="grid">
+   <div class="fld"><label for="titolo">Titolo</label>
+    <select id="titolo"><option value="">—</option><option>Dott.</option><option>Dott.ssa</option><option>Ing.</option><option>Arch.</option><option>Avv.</option><option>Geom.</option><option>Per. Ind.</option><option>Rag.</option><option>Prof.</option><option>Sig.</option><option>Sig.ra</option></select></div>
+   <div class="fld" id="f-nome"><label for="nome">Nome e cognome <span class="rq">*</span></label>
+    <input type="text" id="nome" placeholder="Mario Rossi" autocomplete="name"><div class="e">Indicate nome e cognome.</div></div>
+   <div class="fld full" id="f-email"><label for="email">Email <span class="rq">*</span></label>
+    <input type="email" id="email" placeholder="mario.rossi@azienda.it" autocomplete="email" inputmode="email"><div class="e">Serve un indirizzo email valido: lì riceverete i documenti.</div></div>
+   <div class="fld full" id="f-rs"><label for="rs">Ragione sociale <span class="rq">*</span></label>
+    <input type="text" id="rs" placeholder="Rossi Energia S.r.l. (o studio / professionista)" autocomplete="organization"><div class="e">Indicate la ragione sociale o il nome dello studio.</div></div>
+   <div class="fld"><label for="ditta">Nome commerciale <small>(se diverso)</small></label>
+    <input type="text" id="ditta" placeholder="Rossi Impianti" autocomplete="off"></div>
+   <div class="fld"><label for="ruolo">Ruolo in azienda</label>
+    <input type="text" id="ruolo" placeholder="Amministratore" autocomplete="organization-title"></div>
+  </div>
+  <input type="text" id="sito" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
+  <div class="nav"><button type="button" class="btn" id="b1">Avanti <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+ </section>
+
+ <!-- PASSO 2 -->
+ <section class="card" id="p2" hidden>
+  <p class="kick">Passo 2 di 4</p>
+  <h2>Il vostro ruolo</h2>
+  <p class="lead">Come pensate di partecipare al progetto?</p>
+  <div class="roles" id="roles">
+   <button type="button" class="role" data-v="Investitore o capofila (impresa, PMI)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 21h18M5 21V10l7-5 7 5v11M9 21v-6h6v6"/></svg><div><strong>Investitore o capofila</strong><span>Impresa che guida o finanzia il progetto</span></div></button>
+   <button type="button" class="role" data-v="Professionista"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg><div><strong>Professionista</strong><span>Consulenza tecnica, legale, fiscale</span></div></button>
+   <button type="button" class="role" data-v="Impresa che realizza impianti o opere"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg><div><strong>Impresa esecutrice</strong><span>Impianti, opere, manutenzione</span></div></button>
+   <button type="button" class="role" data-v="Altro (finanza, servizi, operatore)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/></svg><div><strong>Altro</strong><span>Finanza, servizi, operatore energetico</span></div></button>
+  </div>
+  <div class="msg" id="mr" aria-live="polite"></div>
+  <p class="sub">Figure e competenze che offrite <small>· anche più di una, facoltativo</small></p>
+  <div class="chips" id="figure">
+   <button type="button" class="chip" data-m>Avvocato amministrativista</button><button type="button" class="chip" data-m>Commercialista</button><button type="button" class="chip" data-m>Ingegnere energetico</button><button type="button" class="chip" data-m>Energy manager (EGE)</button><button type="button" class="chip" data-m>Esperto in energie rinnovabili</button><button type="button" class="chip" data-m>Tecnico di rete</button><button type="button" class="chip" data-m>Energy trader</button><button type="button" class="chip" data-m>Account manager</button><button type="button" class="chip" data-m>Regulatory affairs</button>
+  </div>
+  <label class="chk" id="c-priv"><input type="checkbox" id="priv"><span>Acconsento al trattamento dei dati ai sensi del Regolamento UE 2016/679 (GDPR) e del D.Lgs. 196/2003. <button type="button" class="lnk" id="binfo" aria-expanded="false" aria-controls="pinfo">Leggi l’informativa</button></span></label>
+  <div class="pbox" id="pinfo" role="region" aria-label="Informativa privacy" hidden>
+   <strong>Informativa sul trattamento dei dati personali (art. 13 GDPR)</strong>
+   <ul>
+    <li><b>Titolare:</b> il promotore del progetto CER-AI, contattabile a amministrazione@cer-ai.it.</li>
+    <li><b>Dati trattati:</b> ragione sociale e nome della ditta; titolo, nome, cognome, ruolo ed email di chi compila; risposte al questionario; sede e partita IVA, se indicate; curriculum, se allegato; l’eventuale foto del biglietto da visita viene letta solo sul vostro dispositivo e non viene inviata né conservata; data e ora del consenso.</li>
+    <li><b>Finalità:</b> valutare una possibile collaborazione, inviare l’accordo di riservatezza, la presentazione e le comunicazioni sul progetto.</li>
+    <li><b>Base giuridica:</b> misure precontrattuali richieste dall’interessato (art. 6.1.b GDPR) e consenso (art. 6.1.a GDPR).</li>
+    <li><b>Destinatari:</b> solo i componenti del gruppo di progetto, vincolati alla riservatezza. I dati non sono diffusi né ceduti a terzi.</li>
+    <li><b>Conservazione:</b> per 2 anni, poi cancellati, salvo collaborazione in corso.</li>
+    <li><b>Diritti:</b> accesso, rettifica, cancellazione, limitazione, opposizione, portabilità e revoca del consenso (artt. 15-22 GDPR), scrivendo a amministrazione@cer-ai.it; reclamo al Garante per la protezione dei dati personali (www.garanteprivacy.it).</li>
+    <li>Il conferimento è facoltativo, ma senza questi dati non possiamo inviarvi la presentazione né valutare la collaborazione.</li>
+   </ul>
+  </div>
+  <div class="nav"><button type="button" class="btn back" id="b2i" aria-label="Indietro">←</button><button type="button" class="btn" id="b2">Invia e prosegui</button></div>
+  <div class="msg" id="m2" aria-live="polite"></div>
+ </section>
+
+ <!-- PASSO 3 -->
+ <section class="card" id="p3" hidden>
+  <p class="kick">Passo 3 di 4</p>
+  <h2>Accordo di riservatezza</h2>
+  <p class="lead">Prima della presentazione vi chiediamo di accettare l’accordo preliminare, che tutela le informazioni sul progetto. I vostri dati restano protetti dall’informativa privacy.</p>
+  <ul class="nda">
+   <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span>Le informazioni sul progetto che riceverete restano riservate e servono solo a valutare la collaborazione.</span></li>
+   <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span>Non le userete per proporre o realizzare iniziative simili, da soli o con altri, in nessun luogo.</span></li>
+   <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span>Non realizzerete lo stesso progetto nella stessa area senza il promotore, né tratterete direttamente con gli enti e gli operatori da lui presentati. Gare pubbliche e attività altrove restano libere.</span></li>
+   <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span>Il promotore non ha obblighi di collaborare e non concede licenze; in caso di violazione si risarcisce il danno effettivo.</span></li>
+   <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span>Gli impegni durano 2 anni. Legge italiana, foro di Nocera Inferiore.</span></li>
+  </ul>
+  <a href="../accordo.html" target="_blank" rel="noopener">Leggi il testo completo</a>
+  <label class="chk"><input type="checkbox" id="okp"><span id="okptxt">Ho letto e accetto l’accordo di riservatezza preliminare.</span></label>
+  <p class="secure">La spunta vale come firma, con data e ora registrate.</p>
+  <div class="nav"><button type="button" class="btn" id="b3" disabled>Accetto e ricevo la presentazione</button></div>
+  <div class="msg" id="m3" aria-live="polite"></div>
+ </section>
+
+ <!-- PASSO 4 -->
+ <section class="card" id="p4" hidden>
+  <p class="kick">Passo 4 di 4 · ultimo</p>
+  <h2>Il vostro profilo</h2>
+  <p class="lead" id="p4lead">La presentazione è in arrivo nella vostra email. Intanto, qualche risposta rapida sul vostro ruolo.</p>
+  <span class="count" id="cnt"></span>
+  <div id="qq"></div>
+  <p class="sub">Curriculum <small>· facoltativo</small></p>
+  <label class="drop" id="drop">
+   <input type="file" id="cv" accept=".pdf,.doc,.docx,.odt,.rtf,application/pdf">
+   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 18v-6M9 15l3-3 3 3"/></svg>
+   <div><strong id="cvt">Allegate il curriculum</strong><span id="cvs">PDF o Word, massimo 5 MB</span></div>
+   <button type="button" class="x" id="cvx" hidden>Rimuovi</button>
+  </label>
+  <p class="sub">Note <small>· facoltativo</small></p>
+  <textarea id="nt" rows="3" placeholder="Esperienze, referenze o altro che ritenete utile"></textarea>
+  <div class="nav"><button type="button" class="btn" id="b4">Invia e concludi</button></div>
+  <div class="msg" id="m4" aria-live="polite"></div>
+ </section>
+
+ <!-- FINE -->
+ <section class="card grazie" id="p5" hidden>
+  <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+  <h2 id="p5t">Grazie!</h2>
+  <p class="big">Nella vostra email trovate ora l’<b>accordo di riservatezza</b> e la <b>presentazione sintetica</b> del progetto.</p>
+  <div class="next">
+   <div><b class="n">1</b><span>Leggete la presentazione sintetica.</span></div>
+   <div><b class="n">2</b><span>Se il progetto vi interessa, toccate <b>«Sono interessato»</b> nella presentazione o nell’email.</span></div>
+   <div><b class="n">3</b><span>Accettate l’accordo completo: vedrete la vostra posizione, le mansioni, l’iter, gli affiancamenti e i computi.</span></div>
+  </div>
+  <p class="s">Se l’email non arriva entro qualche minuto, controllate la cartella Spam o scriveteci a <a href="mailto:amministrazione@cer-ai.it">amministrazione@cer-ai.it</a>.</p>
+ </section>
+</main>
+<footer>CER-AI · Intelligenza green · <a href="mailto:amministrazione@cer-ai.it">amministrazione@cer-ai.it</a> · www.cer-ai.it</footer>
+
+<script>
+(function(){
+ var REGIA='https://script.google.com/macros/s/AKfycbzbOt1ytmyWERRTv7uQEvsXs5ZE2b6S3CgSvVdP8qISTrgoWV1zw9P7aZuz-41z7upSCw/exec';
+ var CODICE=(function(){var a=new Uint8Array(20);(window.crypto||window.msCrypto).getRandomValues(a);return [].map.call(a,function(x){return ('0'+x.toString(16)).slice(-2)}).join('')})();
+ var DOMANDE={"Investitore o capofila": [["Certificazioni", "Quali certificazioni avete?", ["ISO 9001", "ISO 14001", "ISO 45001", "UNI CEI 11352 (servizi energetici)", "SOA lavori pubblici", "Rating di legalità", "Nessuna"], 1], ["Fatturato medio ultimo triennio", "Fatturato medio dell'ultimo triennio", ["Meno di 500.000 €", "500.000 € – 2 M€", "2 – 10 M€", "Oltre 10 M€"]], ["Società di progetto", "Entrereste in una società di progetto con altri soci?", ["Sì", "Dipende", "No"]], ["Proposte di PPP", "Avete già presentato proposte di partenariato pubblico-privato a un Comune?", ["Sì, approvate", "Sì, non approvate", "No"]], ["Comunità energetiche", "Avete costituito o gestite comunità energetiche?", ["Sì, più di una", "Sì, una", "In corso", "No"]], ["Formule con i clienti", "Con quali formule lavorate con i clienti?", ["Vendita e installazione chiavi in mano", "Contratto a prestazione garantita (EPC)", "Servizio energia", "Noleggio o leasing operativo", "Vendita dell'energia prodotta"], 1], ["Accordi con grandi gruppi", "Avete esclusive o accordi stabili con grandi gruppi energetici?", ["No", "Sì"]]], "Professionista": [["Albo", "Siete iscritti a un albo professionale?", ["Avvocati", "Commercialisti ed esperti contabili", "Ingegneri", "Architetti", "Periti industriali", "Geometri", "Altro albo", "Nessuno"]], ["Certificazioni", "Quali certificazioni avete?", ["EGE settore civile", "EGE settore industriale", "Certificatore energetico (APE)", "UNI CEI 11352 (studio o società)", "Nessuna"], 1], ["Anni nel settore energia", "Da quanti anni lavorate nel settore energia?", ["Meno di 5", "5 – 15", "Oltre 15"]], ["Diagnosi energetiche ultimi 3 anni", "Quante diagnosi energetiche avete svolto negli ultimi 3 anni?", ["Nessuna", "1 – 10", "11 – 50", "Oltre 50"]], ["Clienti", "Per quali clienti lavorate?", ["Comuni ed enti pubblici", "Imprese", "Condomìni", "Privati"], 1], ["Comunità energetiche", "Avete seguito comunità energetiche rinnovabili?", ["Sì, più di una", "Sì, una", "In corso", "No"]], ["Impianti seguiti", "Su quali impianti avete esperienza di progetto o direzione lavori?", ["Fotovoltaico su coperture", "Pensiline fotovoltaiche", "Sistemi di accumulo", "Colonnine di ricarica", "Pompe di calore", "Nessuno di questi"], 1], ["Bandi e incentivi", "Avete seguito bandi o incentivi?", ["Bandi europei (es. EUCF)", "PNRR", "Conto termico", "Certificati bianchi", "Nessuno"], 1], ["Forma di lavoro", "Come lavorate?", ["Libero professionista con partita IVA", "Studio associato", "Società di ingegneria", "Dipendente"]], ["Assicurazione professionale", "Avete un'assicurazione di responsabilità professionale?", ["Sì", "No"]], ["Disponibilità 6 mesi", "Che disponibilità avete nei prossimi 6 mesi?", ["Poche ore al mese", "Qualche giorno al mese", "Una parte importante del tempo"]], ["Incarichi dal Comune di Angri", "Potreste ricevere incarichi dal Comune di Angri senza incompatibilità (altri incarichi, parentele, ruoli pubblici)?", ["Sì", "Da verificare", "No"]]], "Impresa che realizza impianti o opere": [["Categorie SOA", "Quali categorie SOA avete?", ["OG1 edifici", "OG9 impianti di produzione di energia", "OG10 impianti elettrici", "OG11 impianti tecnologici", "OS18-A strutture metalliche", "OS28 impianti termici", "OS30 impianti elettrici interni", "Nessuna"], 1], ["Certificazioni", "Quali certificazioni avete?", ["ISO 9001", "ISO 14001", "ISO 45001", "Abilitazione DM 37/08", "Nessuna"], 1], ["Dipendenti", "Quanti dipendenti avete?", ["Meno di 10", "10 – 50", "Oltre 50"]], ["Fotovoltaico ultimi 3 anni", "Quanta potenza fotovoltaica avete installato negli ultimi 3 anni?", ["Meno di 500 kWp", "500 – 2.000 kWp", "Oltre 2.000 kWp"]], ["Esperienze", "Su cosa avete esperienza?", ["Pensiline e carport", "Sistemi di accumulo", "Colonnine di ricarica", "Pompe di calore", "Manutenzione pluriennale"], 1], ["Area operativa", "Dove lavorate di solito?", ["Provincia di Salerno", "Campania", "Sud Italia", "Tutta Italia"]], ["Raggruppamenti", "Entrereste in un raggruppamento di imprese o come subappaltatori?", ["Sì", "Dipende", "No"]]], "Altro": [["Attività", "Di cosa vi occupate?", ["Finanza e credito", "Gestione di colonnine di ricarica", "Vendita di energia", "Servizi alle comunità energetiche", "Altro"], 1], ["Area operativa", "Dove lavorate di solito?", ["Provincia di Salerno", "Campania", "Sud Italia", "Tutta Italia"]], ["Lavori con i Comuni", "Lavorate già con Comuni o enti pubblici?", ["Sì", "No"]]]};
+ var MAXCV=5*1024*1024;
+ function $(i){return document.getElementById(i)}
+ function post(o){ console.log('PROVA, non inviato:',o); return new Promise(function(r){ setTimeout(r,500); }); }
+ function postVero(o){ return fetch(REGIA,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(o)}); }
+ function attesa(b,t){ b.disabled=true; b.dataset.t=b.innerHTML; b.innerHTML='<span class="sp"></span>'+t; }
+ function ripristina(b){ b.disabled=false; if(b.dataset.t) b.innerHTML=b.dataset.t; }
+ var passo=1;
+ function vai(n){
+  passo=n; for(var i=1;i<=5;i++) $('p'+i).hidden=(i!==n);
+  [].forEach.call($('steps').children,function(li,k){ li.className=(k+1<n?'done':(k+1===n?'on':'')); if(k+1<n) li.querySelector('b').textContent='✓'; else li.querySelector('b').textContent=k+1; });
+  if(n===5) $('steps').hidden=true;
+  window.scrollTo({top:0,behavior:'smooth'});
+ }
+ // scelte singole/multiple
+ function scelte(box,multi,onchange){
+  var bs=[].slice.call(box.querySelectorAll('button:not(.x)'));
+  bs.forEach(function(b){ b.setAttribute('aria-pressed','false'); b.addEventListener('click',function(){
+   if(multi){ var on=b.getAttribute('aria-pressed')!=='true';
+    if(b.dataset.none) bs.forEach(function(x){x.setAttribute('aria-pressed','false')}); else bs.forEach(function(x){ if(x.dataset.none) x.setAttribute('aria-pressed','false'); });
+    b.setAttribute('aria-pressed',on?'true':'false');
+   } else { bs.forEach(function(x){x.setAttribute('aria-pressed','false')}); b.setAttribute('aria-pressed','true'); }
+   if(onchange) onchange(); }); });
+  return function(){ return bs.filter(function(x){return x.getAttribute('aria-pressed')==='true'}).map(function(x){return x.dataset.v||x.textContent}); };
+ }
+ // BIGLIETTO DA VISITA: letto sul dispositivo, nulla viene inviato
+ var bvDati={}, CDN='https://cdn.jsdelivr.net/npm/', ocrPronto=null;
+ function leggiBiglietto(txt){
+ var r={}, righe=String(txt).split(/\n+/).map(function(x){return x.replace(/[|_~=«»]+/g,' ').replace(/\s+/g,' ').trim()}).filter(function(x){return x.length>1});
+ var tutto=righe.join('\n');
+ var m=tutto.replace(/\s*@\s*/g,'@').match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/); if(m){ var e=m[0].toLowerCase().replace(/^[._%+-]+/,'').replace(/[.,;]+$/,''); if(/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/.test(e)) r.email=e; }
+ m=tutto.match(/(?:P\.?\s*I\.?\s*V\.?\s*A\.?|partita\s+iva|VAT)[^0-9A-Z]{0,6}(?:IT)?\s*([0-9][0-9 ]{9,13}[0-9])/i); if(m){ var v=m[1].replace(/\s/g,''); if(v.length===11) r.piva=v; }
+ if(!r.piva){ m=tutto.match(/(?:C\.?\s*F\.?|codice fiscale)[^A-Z0-9]{0,6}([A-Z0-9]{16}|[0-9]{11})/i); if(m) r.piva=m[1].toUpperCase(); }
+ if(!r.piva){ m=tutto.toUpperCase().match(/\b[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]\b/); if(m) r.piva=m[0]; }
+ var TIT=/^(Dott\.?ssa|Dott\.?|Ing\.?|Arch\.?|Avv\.?|Geom\.?|Per\.?\s?Ind\.?|Rag\.?|Prof\.?)\s+/i;
+ var SOC=/\b(s\.?\s?r\.?\s?l\.?s?|s\.?\s?p\.?\s?a\.?|s\.?\s?n\.?\s?c\.?|s\.?\s?a\.?\s?s\.?|soc\.?\s?coop|cooperativa|societ[àa]|studio|group|gruppo|consorzio|impianti|engineering|energia|energy|costruzioni|ingegneria|holding)\b/i;
+ var RUO=/\b(amministratore|titolare|direttore|responsabile|presidente|socio|ceo|cto|coo|manager|project|tecnico|commerciale|ingegnere|consulente|founder|fondatore|legale rappresentante|area|sales|engineer|energy manager)\b/i;
+ var IND=/\b(via|viale|v\.le|corso|c\.so|piazza|p\.zza|largo|vicolo|strada|contrada|loc\.|localit[àa]|zona industriale)\b/i;
+ var NO=/@|www\.|https?:|\bt[e]l\b|tel\.|cell|mob\.|fax|p\.?\s?iva|\+39|c\.?f\.|\d{5,}/i;
+ righe.forEach(function(l,i){
+  if(!r.sede && IND.test(l)){ var s=l; var nx=righe[i+1]||''; if(!/\b\d{5}\b/.test(s) && /\b\d{5}\b/.test(nx)) s+=', '+nx; r.sede=s.replace(/^(sede( legale)?|indirizzo)[:\s]*/i,'').replace(/\s*[-–]\s*(tel|cell|fax).*$/i,'').trim(); }
+ });
+ righe.forEach(function(l){
+  if(NO.test(l)||IND.test(l)) return;
+  var t=l.match(TIT);
+  if(!r.nome && t){ r.titolo=t[1].replace(/\s/g,''); r.nome=l.replace(TIT,'').trim(); return; }
+  if(!r.rs && SOC.test(l)) { r.rs=l; return; }
+  if(!r.ruolo && RUO.test(l) && l.length<60) { r.ruolo=l; return; }
+ });
+ if(!r.nome){ righe.some(function(l){ if(NO.test(l)||IND.test(l)||SOC.test(l)||RUO.test(l)) return false; var w=l.split(' '); if(w.length>=2&&w.length<=4&&w.every(function(x){return /^[A-ZÀ-Ý][a-zà-ÿ'’]+$|^[A-ZÀ-Ý']{2,}$/.test(x)})){ r.nome=w.map(function(x){return x.charAt(0)+x.slice(1).toLowerCase()}).join(' '); return true;} return false; }); }
+ if(r.titolo){ var T={'dott':'Dott.','dott.ssa':'Dott.ssa','dottssa':'Dott.ssa','ing':'Ing.','arch':'Arch.','avv':'Avv.','geom':'Geom.','perind':'Per. Ind.','rag':'Rag.','prof':'Prof.'}; r.titolo=T[r.titolo.toLowerCase().replace(/\./g,'').replace('dottssa','dott.ssa')]||T[r.titolo.toLowerCase().replace(/\./g,'')]||''; }
+ return r;
+}
+ function caricaOcr(){ if(ocrPronto) return ocrPronto; ocrPronto=new Promise(function(ok,ko){ var s=document.createElement('script'); s.src=CDN+'tesseract.js@5.1.1/dist/tesseract.min.js'; s.onload=ok; s.onerror=function(){ ocrPronto=null; ko(); }; document.head.appendChild(s); }); return ocrPronto; }
+ function riduci(f){ return new Promise(function(ok,ko){ var u=URL.createObjectURL(f), im=new Image(); im.onload=function(){ var k=Math.min(1,1800/Math.max(im.width,im.height)), c=document.createElement('canvas'); c.width=Math.round(im.width*k); c.height=Math.round(im.height*k); var x=c.getContext('2d'); x.filter='grayscale(1) contrast(1.25)'; x.drawImage(im,0,0,c.width,c.height); URL.revokeObjectURL(u); ok(c); }; im.onerror=ko; im.src=u; }); }
+ function stato(t,err){ var e=$('bvst'); e.textContent=t; e.classList.toggle('err',!!err); }
+ $('bvf').addEventListener('change',function(){
+  var f=this.files[0]; this.value=''; if(!f) return;
+  $('bvbox').hidden=false; $('bvp').style.width='5%'; stato('Preparazione della lettura…');
+  caricaOcr().then(function(){ return Promise.all([riduci(f), Tesseract.createWorker('ita',1,{workerPath:CDN+'tesseract.js@5.1.1/dist/worker.min.js',corePath:CDN+'tesseract.js-core@5.1.1',langPath:CDN+'@tesseract.js-data/ita@1.0.0/4.0.0_best_int',
+    logger:function(m){ if(m.status==='recognizing text'){ $('bvp').style.width=Math.round(30+m.progress*70)+'%'; stato('Lettura del biglietto… '+Math.round(m.progress*100)+'%'); } else { $('bvp').style.width='20%'; } }})]); })
+  .then(function(a){ return a[1].recognize(a[0]).then(function(r){ a[1].terminate(); return r.data.text; }); })
+  .then(function(txt){
+    $('bvbox').hidden=true; var d=leggiBiglietto(txt), n=0;
+    function metti(id,v){ var e=$(id); if(v && !e.value.trim()){ e.value=v; var fl=e.closest('.fld'); if(fl){ fl.classList.add('auto'); fl.classList.remove('bad'); } n++; } }
+    if(d.titolo && !titolo.value){ titolo.value=d.titolo; titolo.closest('.fld').classList.add('auto'); n++; }
+    metti('nome',d.nome); metti('email',d.email); metti('rs',d.rs); metti('ruolo',d.ruolo);
+    bvDati={sede:d.sede||'', piva:d.piva||''}; if(d.sede) n++; if(d.piva) n++;
+    stato(n? 'Dal biglietto abbiamo ricavato '+n+' dati (in verde): controllateli e correggete se serve.' : 'Non siamo riusciti a leggere il biglietto: provate con una foto più nitida o compilate a mano.', !n);
+  })
+  .catch(function(){ $('bvbox').hidden=true; stato('Lettura non disponibile in questo momento: compilate a mano, bastano pochi secondi.',true); });
+ });
+ [].forEach.call(document.querySelectorAll('#p1 input,#p1 select'),function(e){ e.addEventListener('input',function(){ var fl=e.closest('.fld'); if(fl) fl.classList.remove('auto'); }); });
+ // PASSO 1
+ var titolo=$('titolo'),nome=$('nome'),email=$('email'),rs=$('rs'),ditta=$('ditta'),ruolo=$('ruolo');
+ function chi(){ return ((titolo.value?titolo.value+' ':'')+nome.value.trim()).trim(); }
+ function controlla(id,ok){ $(id).classList.toggle('bad',!ok); return ok; }
+ [nome,email,rs].forEach(function(x){ x.addEventListener('input',function(){ x.parentNode.classList.remove('bad'); }); });
+ $('b1').addEventListener('click',function(){
+  var a=controlla('f-nome',nome.value.trim().length>3), b=controlla('f-email',/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())), c=controlla('f-rs',rs.value.trim().length>1);
+  if(a&&b&&c) vai(2); else { var p=document.querySelector('.fld.bad input'); if(p) p.focus(); }
+ });
+ // PASSO 2
+ var getRuolo=scelte($('roles'),false,function(){ $('mr').textContent=''; }), getFig=scelte($('figure'),true);
+ var priv=$('priv'); priv.addEventListener('change',function(){ $('c-priv').classList.remove('bad'); $('m2').textContent=''; });
+ $('binfo').addEventListener('click',function(e){ e.preventDefault(); e.stopPropagation(); var on=$('pinfo').hidden; $('pinfo').hidden=!on; this.setAttribute('aria-expanded',on?'true':'false'); });
+ $('b2i').addEventListener('click',function(){ vai(1); });
+ function tipo(){ var f=getFig(); return (getRuolo()[0]||'')+(f.length?' · '+f.join(', '):''); }
+ var inviato=false;
+ $('b2').addEventListener('click',function(){
+  var b=this, r=getRuolo()[0];
+  if(!r){ $('mr').textContent='Scegliete il ruolo più vicino al vostro.'; $('roles').scrollIntoView({behavior:'smooth',block:'center'}); return; }
+  if(!priv.checked){ $('c-priv').classList.add('bad'); $('m2').textContent='Per proseguire serve il consenso al trattamento dei dati.'; return; }
+  $('m2').textContent='';
+  if(inviato){ vai(3); return; }
+  attesa(b,'Invio in corso…');
+  var f=getFig();
+  post({ragioneSociale:rs.value.trim(), ditta:ditta.value.trim(), nome:chi(), titolo:titolo.value, ruolo:ruolo.value.trim(), email:email.value.trim(), sede:bvDati.sede||'', piva:bvDati.piva||'',
+   accordo:false, tipo:tipo(), codice:CODICE, flusso:'sito', privacy:true, sito:$('sito').value, quandoClient:new Date().toISOString(),
+   risposte:[{d:'Ruolo',r:r},{d:'Figure',r:f.length?f.join(', '):'—'}]})
+  .then(function(){ inviato=true; ripristina(b); $('b2i').hidden=true;
+    $('okptxt').textContent='Io, '+chi()+', per '+rs.value.trim()+', ho letto e accetto l’accordo di riservatezza preliminare.';
+    vai(3); })
+  .catch(function(){ ripristina(b); $('m2').innerHTML='Invio non riuscito: controllate la connessione e riprovate, oppure scriveteci a <a href="mailto:amministrazione@cer-ai.it">amministrazione@cer-ai.it</a>.'; });
+ });
+ // PASSO 3
+ $('okp').addEventListener('change',function(){ $('b3').disabled=!this.checked; });
+ $('b3').addEventListener('click',function(){
+  var b=this; attesa(b,'Registrazione…');
+  post({azione:'accordo',codice:CODICE}).then(function(){ prepara4(); vai(4); })
+   .catch(function(){ ripristina(b); $('m3').textContent='Invio non riuscito: riprovate tra un momento.'; });
+ });
+ // PASSO 4
+ function ruoloDi(t){ t=String(t).split(' · ')[0]; if(/capofila|investitor/i.test(t))return 'Investitore o capofila'; if(/professionist|tecnic/i.test(t))return 'Professionista'; if(/impresa|impianti|opere/i.test(t))return 'Impresa che realizza impianti o opere'; return 'Altro'; }
+ var getters=[], ruoloOk=false;
+ function esc(t){ return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]}); }
+ function prepara4(){
+  var qq=DOMANDE[ruoloDi(tipo())]||[], box=$('qq');
+  box.innerHTML=qq.map(function(q,i){ return '<div class="qc" data-q="'+esc(q[0])+'"><p><i>'+(i+1)+'</i><span>'+esc(q[1])+(q[3]?' <small>· anche più di una</small>':'')+'</span></p><div class="chips">'+
+    q[2].map(function(o){ return '<button type="button" class="chip"'+(q[3]?' data-m':'')+(/^Nessun/.test(o)?' data-none="1"':'')+'>'+esc(o)+'</button>'; }).join('')+'</div></div>'; }).join('');
+  getters=[].map.call(box.querySelectorAll('.qc'),function(q){ var g=scelte(q,!!q.querySelector('[data-m]'),function(){ q.classList.toggle('ok',g().length>0); conta(); }); return {d:q.dataset.q,g:g}; });
+  conta();
+ }
+ function conta(){ var n=getters.filter(function(x){return x.g().length}).length; $('cnt').textContent=n+' di '+getters.length+' risposte'; }
+ // curriculum
+ var cvFile=null, cv=$('cv'), drop=$('drop');
+ function setCv(f){
+  $('m4').textContent='';
+  if(f && f.size>MAXCV){ $('m4').textContent='Il file supera 5 MB: allegatene uno più leggero (ad esempio un PDF).'; f=null; }
+  if(f && !/\.(pdf|docx?|odt|rtf)$/i.test(f.name)){ $('m4').textContent='Formato non accettato: usate PDF o Word.'; f=null; }
+  cvFile=f||null; drop.classList.toggle('has',!!cvFile); $('cvx').hidden=!cvFile;
+  $('cvt').textContent=cvFile?cvFile.name:'Allegate il curriculum';
+  $('cvs').textContent=cvFile?(Math.max(1,Math.round(cvFile.size/1024))+' KB · pronto per l’invio'):'PDF o Word, massimo 5 MB';
+  if(!cvFile) cv.value='';
+ }
+ cv.addEventListener('change',function(){ setCv(cv.files[0]); });
+ $('cvx').addEventListener('click',function(e){ e.preventDefault(); e.stopPropagation(); setCv(null); });
+ ['dragenter','dragover'].forEach(function(t){ drop.addEventListener(t,function(e){ e.preventDefault(); drop.classList.add('ov'); }); });
+ ['dragleave','drop'].forEach(function(t){ drop.addEventListener(t,function(e){ e.preventDefault(); drop.classList.remove('ov'); if(t==='drop' && e.dataTransfer.files[0]) setCv(e.dataTransfer.files[0]); }); });
+ function leggi(f){ return new Promise(function(ok,ko){ var r=new FileReader(); r.onload=function(){ ok(String(r.result).split(',')[1]||''); }; r.onerror=ko; r.readAsDataURL(f); }); }
+ $('b4').addEventListener('click',function(){
+  if(this.dataset.fatto){ return; } var b=this, r=getters.map(function(x){ var v=x.g(); return {d:x.d, r:v.length?v.join(', '):'—'}; });
+  r.push({d:'Note', r:$('nt').value.trim()||'—'});
+  if(cvFile) r.push({d:'Curriculum', r:'allegato ('+cvFile.name+')'});
+  attesa(b,'Invio…');
+  (ruoloOk?Promise.resolve():post({azione:'ruolo',codice:CODICE,risposte:r}).then(function(){ ruoloOk=true; }))
+   .then(function(){ if(!cvFile) return; b.innerHTML='<span class="sp"></span>Caricamento curriculum…';
+     return leggi(cvFile).then(function(d){ return post({azione:'cv',codice:CODICE,cv:{nome:cvFile.name,tipo:cvFile.type||'',dati:d}}); }); })
+   .then(function(){ b.dataset.fatto='1'; $('p5t').textContent='Grazie, '+chi()+'!'; vai(5); })
+   .catch(function(){ ripristina(b); $('m4').textContent=ruoloOk?'Risposte inviate, ma il curriculum non è partito: riprovate o toglietelo.':'Invio non riuscito: riprovate tra un momento.'; });
+ });
+})();
+</script>
+</body>
+</html>
