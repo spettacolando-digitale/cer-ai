@@ -179,7 +179,12 @@ th{background:var(--v);color:#fff;font-weight:700}td.n,th.n{text-align:right;whi
  function esc(t){ return String(t==null?'':t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]}); }
  function eur(n){ return Math.round(n).toLocaleString('it-IT')+' €'; }
  function post(o){ return fetch(REGIA,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(o)}); }
- function carica(cb){ var n='cb'+Date.now()+Math.floor(Math.random()*1000), s=document.createElement('script'), t=setTimeout(function(){ errore('rete'); },25000);
+ // Prima prova senza account Google (evita l'errore di Google con più account aperti), poi il metodo di riserva.
+ function carica(cb){ var n='cb'+Date.now()+Math.floor(Math.random()*1000), url=REGIA+'?azione=percorso&c='+C+'&callback='+n+'&t='+Date.now();
+  fetch(url,{credentials:'omit',cache:'no-store'}).then(function(r){ return r.text(); }).then(function(t){
+    var i=t.indexOf(n+'('); if(i<0) throw new Error('formato'); cb(JSON.parse(t.slice(i+n.length+1,t.lastIndexOf(')')))); })
+  .catch(function(){ caricaScript(cb); }); }
+ function caricaScript(cb){ var n='cs'+Date.now()+Math.floor(Math.random()*1000), s=document.createElement('script'), t=setTimeout(function(){ errore('rete'); },25000);
   window[n]=function(d){ clearTimeout(t); try{ delete window[n]; }catch(e){} s.remove(); cb(d); };
   s.onerror=function(){ clearTimeout(t); errore('rete'); };
   s.src=REGIA+'?azione=percorso&c='+C+'&callback='+n+'&t='+Date.now(); document.head.appendChild(s); }
