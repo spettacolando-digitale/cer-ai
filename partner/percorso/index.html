@@ -195,7 +195,7 @@ th{background:var(--v);color:#fff;font-weight:700}td.n,th.n{text-align:right;whi
   V.innerHTML='<p class="kick">Percorso riservato</p><h1>'+T[0]+'</h1><p class="lead">'+T[1]+'</p>'; }
  if(!C){ errore('link'); return; }
  function attendi(cond,dopo,tent){ tent=tent||0; carica(function(d){ if(cond(d)||tent>=8) dopo(d); else setTimeout(function(){ attendi(cond,dopo,tent+1); },2500); }); }
- function avvia(){ carica(function(d){ if(!d.ok) return errore(d.errore); d.completo?mostraPagina(d):(d.indipendente?mostraIndip(d):mostraAccordo(d)); }); }
+ function avvia(){ carica(function(d){ if(!d.ok) return errore(d.errore); d.completo?mostraPagina(d):(d.indipendente?mostraIndip(d):(d.sceglie?mostraScelta(d):mostraAccordo(d))); }); }
 
  var QUAL=['Legale rappresentante','Amministratore','Titolare','Procuratore','Libero professionista','Referente delegato'];
  function mostraAccordo(d){
@@ -224,27 +224,44 @@ th{background:var(--v);color:#fff;font-weight:700}td.n,th.n{text-align:right;whi
   });
  }
 
+ function mostraScelta(d){
+  var c=d.sceglie, h='<p class="kick">Il vostro percorso</p><h1>Benvenuti, '+esc(d.nome)+'</h1>'+
+   '<p class="lead">Nel questionario avete indicato anche incarichi per il Comune. Gli incarichi per il Comune e quelli nella parte privata non si possono avere insieme: scegliete come proseguire.</p>'+
+   '<div class="sec"><h2>Parte privata con la capofila</h2><div class="box">Accordo completo, pagina personale con il progetto, le mansioni e le tappe; incarichi affidati dalla capofila.'+(c.privati&&c.privati.length?'<br><br><b>Avete indicato:</b> '+esc(c.privati.join(', ')):'')+'</div>'+
+   '<div class="nav"><button type="button" class="btn" id="bpriv">Proseguo con la parte privata</button></div></div>'+
+   '<div class="sec"><h2>Incarichi indipendenti per il Comune</h2><div class="box">Patto di indipendenza: nessun incarico dalla capofila né compensi dal promotore, niente materiali riservati della parte privata. Gli incarichi li decide e li affida il Comune, in autonomia.<br><br><b>Avete indicato:</b> '+esc(c.comune.join(', '))+'</div>'+
+   '<div class="nav"><button type="button" class="btn" id="bcom">Scelgo gli incarichi per il Comune</button></div><div class="msg" id="m"></div></div>';
+  V.innerHTML=h; window.scrollTo(0,0);
+  document.getElementById('bpriv').addEventListener('click',function(){ mostraAccordo(d); window.scrollTo(0,0); });
+  var bc=document.getElementById('bcom'); bc.addEventListener('click',function(){ bc.disabled=true; bc.innerHTML='<span class="sp"></span>Un momento…';
+   post({azione:'scelta_percorso',codice:C,scelta:'comune'}).then(function(){ attendi(function(x){ return x.ok&&x.indipendente; },function(x){ if(x.ok&&x.indipendente) mostraIndip(x); else { bc.disabled=false; bc.textContent='Riprova'; document.getElementById('m').textContent='La registrazione sta richiedendo più tempo del previsto: riprovate tra un minuto.'; } }); })
+    .catch(function(){ bc.disabled=false; bc.textContent='Scelgo gli incarichi per il Comune'; document.getElementById('m').textContent='Invio non riuscito: riprovate tra un momento.'; });
+  });
+ }
+
  function mostraIndip(d,nuovo){
   var h='<p class="kick">Incarichi per il Comune</p><h1>'+(d.accettato?esc(d.nome):'Benvenuti, '+esc(d.nome))+'</h1><span class="pill">Tecnico indipendente</span>';
   if(d.accettato){
-   h+='<div class="ok2">'+(nuovo?'Dichiarazione registrata: vi abbiamo inviato per email il PDF da firmare. ':'')+esc(String(d.accettato).replace(/\s*\(versione [^)]*\)/,''))+'.</div>';
+   h+='<div class="ok2">'+(nuovo?'Patto registrato: vi abbiamo inviato per email il PDF da firmare. ':'')+esc(String(d.accettato).replace(/\s*\(versione [^)]*\)/,''))+'.</div>';
    h+='<div class="sec"><h2>Come prosegue</h2><div class="box">Gli incarichi per il Comune li decide e li affida il Comune di Angri, in autonomia e con le sue procedure. Possiamo segnalare la vostra disponibilità; vi informeremo quando ci saranno novità.</div></div>';
    if(d.incarichi&&d.incarichi.length) h+='<div class="sec"><h2>Gli incarichi che avete indicato</h2>'+lista(d.incarichi)+'</div>';
    h+='<p class="secure">Pagina personale: vi chiediamo di non inoltrare il link.</p>';
    V.innerHTML=h; window.scrollTo(0,0); return;
   }
-  h+='<p class="lead">Avete scelto gli incarichi indipendenti per il Comune. Per restare indipendenti non riceverete l’accordo completo né i materiali riservati della parte privata: vi chiediamo solo questa dichiarazione.</p>'+
-   '<p class="sub">Testo della dichiarazione</p><div class="nda-t">'+d.dichiarazione+'</div>'+
-   '<label class="chk"><input type="checkbox" id="ok"><span>Io, '+esc(d.nome)+', per '+esc(d.rs)+', ho letto e accetto la dichiarazione di indipendenza.</span></label>'+
+  h+='<p class="lead">Avete scelto gli incarichi indipendenti per il Comune. Per restare indipendenti non riceverete l’accordo completo né i materiali riservati della parte privata: vi chiediamo solo questo patto.</p>'+
+   '<p class="sub">Testo del patto</p><div class="nda-t">'+d.dichiarazione+'</div>'+
+   '<label class="chk"><input type="checkbox" id="ok"><span>Io, '+esc(d.nome)+', per '+esc(d.rs)+', ho letto e accetto il patto di indipendenza.</span></label>'+
    '<p class="secure">La spunta vale come accettazione, con data e ora registrate. Riceverete il PDF da firmare.</p>'+
-   '<div class="nav"><button type="button" class="btn" id="bi" disabled>Accetto la dichiarazione</button></div><div class="msg" id="m"></div>'+
-   '<p class="note">Avete cambiato idea e preferite la parte privata? Scriveteci a <a href="mailto:amministrazione@cer-ai.it">amministrazione@cer-ai.it</a>.</p>';
+   '<div class="nav"><button type="button" class="btn back" id="bindietro">Torna alla scelta</button><button type="button" class="btn" id="bi" disabled>Accetto il patto</button></div><div class="msg" id="m"></div>'+
+   '';
   V.innerHTML=h;
+  var bk=document.getElementById('bindietro'); bk.addEventListener('click',function(){ bk.disabled=true; bk.innerHTML='<span class="sp"></span>Un momento…';
+   post({azione:'scelta_percorso',codice:C,scelta:'privata'}).then(function(){ attendi(function(x){ return x.ok&&!x.indipendente; },function(x){ if(x.ok&&!x.indipendente) avvia(); else { bk.disabled=false; bk.textContent='Torna alla scelta'; } }); }).catch(function(){ bk.disabled=false; bk.textContent='Torna alla scelta'; }); });
   var ok=document.getElementById('ok'), b=document.getElementById('bi');
   ok.addEventListener('change',function(){ b.disabled=!ok.checked; });
   b.addEventListener('click',function(){ b.disabled=true; b.innerHTML='<span class="sp"></span>Registrazione…';
    post({azione:'indipendenza',codice:C}).then(function(){ attendi(function(x){ return x.ok&&!!x.accettato; },function(x){ if(x.ok&&x.accettato) mostraIndip(x,true); else { b.disabled=false; b.textContent='Riprova'; document.getElementById('m').textContent='La registrazione sta richiedendo più tempo del previsto: riprovate tra un minuto.'; } }); })
-    .catch(function(){ b.disabled=false; b.textContent='Accetto la dichiarazione'; document.getElementById('m').textContent='Invio non riuscito: riprovate tra un momento.'; });
+    .catch(function(){ b.disabled=false; b.textContent='Accetto il patto'; document.getElementById('m').textContent='Invio non riuscito: riprovate tra un momento.'; });
   });
  }
 
