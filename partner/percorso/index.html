@@ -239,6 +239,7 @@ th{background:var(--v);color:#fff;font-weight:700}td.n,th.n{text-align:right;whi
   h+='<div class="sec"><h2>Le vostre mansioni</h2>'+lista(x.mansioni)+'</div>';
   if(x.figure&&x.figure.length) h+='<div class="sec"><h2>Le figure che avete indicato</h2>'+x.figure.map(function(f){ return '<div class="fig"><b>'+esc(f.nome)+'</b>'+lista(f.mansioni)+'</div>'; }).join('')+'</div>';
   h+='<div class="sec"><h2>Chi vi affianca</h2>'+lista(x.affiancamenti)+'</div>';
+  if(x.avvertenze&&x.avvertenze.length) h+='<div class="sec"><h2>Compatibilità degli incarichi</h2><div class="box">'+lista(x.avvertenze)+'<p class="note" style="margin:4px 0 0">L’assegnazione definitiva degli incarichi terrà conto di queste regole.</p></div></div>';
   if(x.computo&&x.computo.length){ var tot=0;
    var righe=x.computo.map(function(c){ var annua=/all.anno/i.test(c[0]); if(!annua) tot+=c[1]; return '<tr><td>'+esc(c[0])+'</td><td class="n">'+eur(c[1])+'</td></tr>'; }).join('');
    h+='<div class="sec"><h2>Computo metrico della vostra parte</h2><table><tr><th>Voce</th><th class="n">Importo</th></tr>'+righe+'<tr class="t"><td>Totale investimento (escluse le voci annuali)</td><td class="n">'+eur(tot)+'</td></tr></table><p class="note">'+esc(x.notaComputo)+'</p></div>'; }
