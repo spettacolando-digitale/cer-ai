@@ -149,7 +149,7 @@ footer{text-align:center;color:var(--gr);font-size:13px;padding:6px 16px 30px}
  .card{padding:20px 16px}
  .steps li span{font-size:11.5px}
  .steps li:not(:last-child)::after{left:calc(50% + 18px);right:calc(-50% + 18px)}
- .badge{display:none}
+ .badge{display:none} #bdoc{display:inline-flex;padding:6px 10px;font-size:12px}
  h1{font-size:24px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -159,9 +159,21 @@ footer{text-align:center;color:var(--gr);font-size:13px;padding:6px 16px 30px}
 <div class="top"><div class="in">
  <div class="brand">CER<span>-AI</span><small>Intelligenza green</small></div>
  <div class="badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Percorso riservato</div>
+ <button type="button" class="badge" id="bdoc" style="cursor:pointer;color:inherit;font:inherit;font-size:13px">&#128206; Carica documento</button>
 </div></div>
 
 <main>
+ <section class="card" id="pdoc" hidden style="margin-bottom:14px">
+  <h2 style="margin-top:0">Carica un documento</h2>
+  <div id="fdoc">
+   <p class="s">Foto o PDF di planimetrie, delibere e altri documenti per il progetto. Vengono accettati solo se il vostro nome è tra i collaboratori del progetto.</p>
+   <div class="fld full"><label for="dnome">Il vostro nome e cognome <span class="rq">*</span></label><input type="text" id="dnome" autocomplete="name"></div>
+   <div class="fld full"><label for="dfile">Foto o file (scatto, galleria o PDF) <span class="rq">*</span></label><input type="file" id="dfile" accept="image/*,application/pdf" multiple></div>
+   <div class="fld full"><label for="dnota">Di cosa si tratta <small>(facoltativo)</small></label><input type="text" id="dnota" placeholder="Es. delibera di approvazione del PAES"></div>
+   <div class="nav"><button type="button" class="btn" id="bdinv">Invia</button></div>
+   <div class="msg" id="mdoc" aria-live="polite"></div>
+  </div>
+ </section>
  <ol class="steps" id="steps" aria-label="Avanzamento">
   <li class="on"><b>1</b><span>Chi siete</span></li>
   <li><b>2</b><span>Ruolo</span></li>
@@ -490,6 +502,21 @@ footer{text-align:center;color:var(--gr);font-size:13px;padding:6px 16px 30px}
      return leggi(cvFile).then(function(d){ return post({azione:'cv',codice:CODICE,cv:{nome:cvFile.name,tipo:cvFile.type||'',dati:d}}); }); })
    .then(function(){ b.dataset.fatto='1'; $('p5t').textContent='Grazie, '+chi()+'!'; vai(5); })
    .catch(function(){ ripristina(b); $('m4').textContent=ruoloOk?'Risposte inviate, ma il curriculum non è partito: riprovate o toglietelo.':'Invio non riuscito: riprovate tra un momento.'; });
+ });
+ // DOCUMENTI DEI COLLABORATORI: foto ridotte a 3200 px, PDF così com'è; la regia accetta solo i nomi in elenco
+ $('bdoc').addEventListener('click',function(){ var p=$('pdoc'); p.hidden=!p.hidden; if(!p.hidden){ p.scrollIntoView({behavior:'smooth'}); $('dnome').focus(); } });
+ function riduci(f){ return new Promise(function(ok){ if(!/^image\/(jpeg|png|webp)$/.test(f.type)) return leggi(f).then(function(d){ ok({nome:f.name,tipo:f.type,dati:d}); });
+  var u=URL.createObjectURL(f), im=new Image(); im.onload=function(){ var k=Math.min(1,3200/Math.max(im.width,im.height)), c=document.createElement('canvas'); c.width=Math.round(im.width*k); c.height=Math.round(im.height*k);
+   c.getContext('2d').drawImage(im,0,0,c.width,c.height); URL.revokeObjectURL(u); ok({nome:f.name.replace(/\.[^.]+$/,'')+'.jpg',tipo:'image/jpeg',dati:c.toDataURL('image/jpeg',0.88).split(',')[1]}); };
+  im.onerror=function(){ URL.revokeObjectURL(u); leggi(f).then(function(d){ ok({nome:f.name,tipo:f.type,dati:d}); }); }; im.src=u; }); }
+ $('bdinv').addEventListener('click',function(){
+  var b=this, n=$('dnome').value.trim(), fs=[].slice.call($('dfile').files||[]), m=$('mdoc');
+  if(n.length<2||!fs.length){ m.textContent='Indicate il vostro nome e scegliete almeno un file.'; return; }
+  var grandi=fs.filter(function(f){ return f.size>10*1024*1024 && !/^image\/(jpeg|png|webp)$/.test(f.type); });
+  if(grandi.length){ m.textContent='File troppo grande (oltre 10 MB): '+grandi[0].name; return; }
+  attesa(b,'Invio…'); var i=0;
+  (function prossimo(){ if(i>=fs.length){ ripristina(b); m.textContent='Inviato. Se il nome è tra i collaboratori, il documento arriva in regia.'; $('dfile').value=''; return; }
+   riduci(fs[i++]).then(function(f){ return post({azione:'documento',nome:n,nota:$('dnota').value.trim(),file:f}); }).then(prossimo).catch(function(){ ripristina(b); m.textContent='Invio non riuscito: riprovate tra un momento.'; }); })();
  });
 })();
 </script>
