@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="it">
 <head>
+<script>if(top!==self){try{top.location=self.location}catch(e){}document.documentElement.style.display="none"}</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
@@ -188,6 +189,8 @@ footer{text-align:center;color:var(--gr);font-size:13px;padding:6px 16px 30px}
     <input type="text" id="nome" placeholder="Mario Rossi" autocomplete="name"><div class="e">Indicate nome e cognome.</div></div>
    <div class="fld full" id="f-email"><label for="email">Email <span class="rq">*</span></label>
     <input type="email" id="email" placeholder="mario.rossi@azienda.it" autocomplete="email" inputmode="email"><div class="e">Serve un indirizzo email valido: lì riceverete i documenti.</div></div>
+   <div class="fld full" id="f-pres"><label for="pres">Chi vi ha presentato il progetto? <span class="rq">*</span></label>
+    <input type="text" id="pres" placeholder="Nome e cognome della persona che vi ha dato il link" autocomplete="off"><div class="e">Indicate chi vi ha dato il link.</div></div>
    <div class="fld full" id="f-rs"><label for="rs">Ragione sociale <span class="rq">*</span></label>
     <input type="text" id="rs" placeholder="Rossi Energia S.r.l. (o studio / professionista)" autocomplete="organization"><div class="e">Indicate la ragione sociale o il nome dello studio.</div></div>
    <div class="fld"><label for="ditta">Nome commerciale <small>(se diverso)</small></label>
@@ -276,6 +279,7 @@ footer{text-align:center;color:var(--gr);font-size:13px;padding:6px 16px 30px}
  <section class="card grazie" id="p5" hidden>
   <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
   <h2 id="p5t">Grazie!</h2>
+  <p class="note" style="margin:6px 0 10px">Se entro qualche minuto non ricevete l’email, controllate lo spam o contattate chi vi ha presentato il progetto.</p>
   <p class="big">Nella vostra email trovate ora l’<b>accordo di riservatezza</b> e la <b>presentazione sintetica</b> del progetto.</p>
   <div class="next">
    <div><b class="n">1</b><span>Leggete la presentazione sintetica.</span></div>
@@ -412,8 +416,8 @@ footer{text-align:center;color:var(--gr);font-size:13px;padding:6px 16px 30px}
  function controlla(id,ok){ $(id).classList.toggle('bad',!ok); return ok; }
  [nome,email,rs].forEach(function(x){ x.addEventListener('input',function(){ x.parentNode.classList.remove('bad'); }); });
  $('b1').addEventListener('click',function(){
-  var a=controlla('f-nome',nome.value.trim().length>3), b=controlla('f-email',/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())), c=controlla('f-rs',rs.value.trim().length>1);
-  if(a&&b&&c) vai(2); else { var p=document.querySelector('.fld.bad input'); if(p) p.focus(); }
+  var a=controlla('f-nome',nome.value.trim().length>3), b=controlla('f-email',/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())), c=controlla('f-rs',rs.value.trim().length>1), d=controlla('f-pres',$('pres').value.trim().length>1);
+  if(a&&b&&c&&d) vai(2); else { var p=document.querySelector('.fld.bad input'); if(p) p.focus(); }
  });
  // PASSO 2
  var getRuolo=scelte($('roles'),false,function(){ $('mr').textContent=''; }), getFig=scelte($('figure'),true);
@@ -431,7 +435,7 @@ footer{text-align:center;color:var(--gr);font-size:13px;padding:6px 16px 30px}
   attesa(b,'Invio in corso…');
   var f=getFig();
   post({ragioneSociale:rs.value.trim(), ditta:ditta.value.trim(), nome:chi(), titolo:titolo.value, ruolo:ruolo.value.trim(), email:email.value.trim(), sede:bvDati.sede||'', piva:bvDati.piva||'',
-   accordo:false, tipo:tipo(), codice:CODICE, flusso:'sito', privacy:true, sito:$('sito').value, quandoClient:new Date().toISOString(),
+   accordo:false, presentato:$('pres').value.trim(), tipo:tipo(), codice:CODICE, flusso:'sito', privacy:true, sito:$('sito').value, quandoClient:new Date().toISOString(),
    risposte:[{d:'Ruolo',r:r},{d:'Figure',r:f.length?f.join(', '):'—'}]})
   .then(function(){ inviato=true; ripristina(b); $('b2i').hidden=true;
     $('okptxt').textContent='Io, '+chi()+', per '+rs.value.trim()+', ho letto e accetto l’accordo di riservatezza preliminare.';
