@@ -168,7 +168,7 @@ footer{text-align:center;color:var(--gr);font-size:13px;padding:6px 16px 30px}
   <div id="fdoc">
    <p class="s">Foto o PDF di planimetrie, delibere e altri documenti per il progetto. Vengono accettati solo se il vostro nome è tra i collaboratori del progetto.</p>
    <div class="fld full"><label for="dnome">Il vostro nome e cognome <span class="rq">*</span></label><input type="text" id="dnome" autocomplete="name"></div>
-   <div class="fld full"><label for="dfile">Foto o file (scatto, galleria o PDF) <span class="rq">*</span></label><input type="file" id="dfile" accept="image/*,application/pdf" multiple></div>
+   <div class="fld full"><label for="dfile">Foto o file (scatto, galleria o PDF) <span class="rq">*</span></label><input type="file" id="dfile" accept="image/*,application/pdf" multiple><div class="hint">Per un documento di più pagine: scattate o scegliete una pagina alla volta, si aggiungono in ordine.</div><ol id="dlist" style="margin:8px 0 0;padding-left:22px;font-size:14px"></ol></div>
    <div class="fld full"><label for="dnota">Di cosa si tratta <small>(facoltativo)</small></label><input type="text" id="dnota" placeholder="Es. delibera di approvazione del PAES"></div>
    <div class="nav"><button type="button" class="btn" id="bdinv">Invia</button></div>
    <div class="msg" id="mdoc" aria-live="polite"></div>
@@ -509,14 +509,18 @@ footer{text-align:center;color:var(--gr);font-size:13px;padding:6px 16px 30px}
   var u=URL.createObjectURL(f), im=new Image(); im.onload=function(){ var k=Math.min(1,3200/Math.max(im.width,im.height)), c=document.createElement('canvas'); c.width=Math.round(im.width*k); c.height=Math.round(im.height*k);
    c.getContext('2d').drawImage(im,0,0,c.width,c.height); URL.revokeObjectURL(u); ok({nome:f.name.replace(/\.[^.]+$/,'')+'.jpg',tipo:'image/jpeg',dati:c.toDataURL('image/jpeg',0.88).split(',')[1]}); };
   im.onerror=function(){ URL.revokeObjectURL(u); leggi(f).then(function(d){ ok({nome:f.name,tipo:f.type,dati:d}); }); }; im.src=u; }); }
+ var DOCS=[];
+ function mostraDocs(){ var l=$('dlist'); l.innerHTML=''; DOCS.forEach(function(f,k){ var li=document.createElement('li'); li.textContent=f.name+' '; var x=document.createElement('button'); x.type='button'; x.textContent='✕'; x.setAttribute('aria-label','Togli'); x.style.cssText='border:0;background:none;color:#a33;cursor:pointer;font-size:14px'; x.onclick=function(){ DOCS.splice(k,1); mostraDocs(); }; li.appendChild(x); l.appendChild(li); }); }
+ $('dfile').addEventListener('change',function(){ [].slice.call(this.files||[]).forEach(function(f){ DOCS.push(f); }); this.value=''; mostraDocs(); });
  $('bdinv').addEventListener('click',function(){
-  var b=this, n=$('dnome').value.trim(), fs=[].slice.call($('dfile').files||[]), m=$('mdoc');
+  var b=this, n=$('dnome').value.trim(), fs=DOCS.slice(), m=$('mdoc'), nota=$('dnota').value.trim();
   if(n.length<2||!fs.length){ m.textContent='Indicate il vostro nome e scegliete almeno un file.'; return; }
   var grandi=fs.filter(function(f){ return f.size>10*1024*1024 && !/^image\/(jpeg|png|webp)$/.test(f.type); });
   if(grandi.length){ m.textContent='File troppo grande (oltre 10 MB): '+grandi[0].name; return; }
-  attesa(b,'Invio…'); var i=0;
-  (function prossimo(){ if(i>=fs.length){ ripristina(b); m.textContent='Inviato. Se il nome è tra i collaboratori, il documento arriva in regia.'; $('dfile').value=''; return; }
-   riduci(fs[i++]).then(function(f){ return post({azione:'documento',nome:n,nota:$('dnota').value.trim(),file:f}); }).then(prossimo).catch(function(){ ripristina(b); m.textContent='Invio non riuscito: riprovate tra un momento.'; }); })();
+  attesa(b,'Invio…'); var i=0, tot=fs.length;
+  (function prossimo(){ if(i>=tot){ ripristina(b); m.textContent='Inviat'+(tot>1?'e '+tot+' pagine':'o')+'. Se il nome è tra i collaboratori, il documento arriva in regia.'; DOCS=[]; mostraDocs(); return; }
+   m.textContent='Invio '+(i+1)+' di '+tot+'…'; var k=i++;
+   riduci(fs[k]).then(function(f){ if(tot>1) f.nome=(nota||'documento')+' – pag. '+(k+1)+' di '+tot+'.'+(f.nome.split('.').pop()||'jpg'); return post({azione:'documento',nome:n,nota:(tot>1?'':nota),file:f}); }).then(prossimo).catch(function(){ ripristina(b); m.textContent='Invio non riuscito alla pagina '+(k+1)+': riprovate tra un momento.'; }); })();
  });
 })();
 </script>
